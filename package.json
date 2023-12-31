@@ -4,7 +4,9 @@
   "description": "Beginner project for learning NodeJS",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.ts",
+    "start": "node dist/index.ts",
+    "build": "npx tsc",
+    "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
