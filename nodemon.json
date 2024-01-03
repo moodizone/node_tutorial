@@ -1,0 +1,9 @@
+{
+  "exec": "ts-node",
+  "ext": "ts",
+  "delay": 100,
+  "ignore": ["*.test.ts"],
+  "verbose": true,
+  "exitcrash": true,
+  "spawn": true
+}
