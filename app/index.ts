@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import { Error } from "mongoose";
 
 import userRouter from "./routes/user";
 import { generate404 } from "./utils/error";
@@ -24,6 +25,19 @@ app.use((_req, res) => {
 // error boundary
 // eslint-disable-next-line
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  console.log(`Error boundary middleware:`, err);
-  res.status(500).send({ message: "Internal Server Error" });
+
+  // 422
+  if (err instanceof Error.ValidationError) {
+    const readableError: Record<string, string> = {};
+
+    for (const filed in err.errors) {
+      readableError[filed] = err.errors[filed].message;
+    }
+
+    res.status(422).json(readableError);
+  } else {
+    // 500
+    console.log(`Error boundary middleware:`, err);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
 });
